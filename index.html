@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Media player - Choose Website</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="website.css">
+    <script defer>
+        function requestUrl() {
+            let search = document.getElementById("search_site");
+
+            if(search.value !== "" && (search.value.startsWith("http://") || search.value.startsWith("https://"))) {
+                //gmod.requestUrl(search.value);
+                window.location.href = search.value;
+
+                //window.open(search.value);
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+        <h>Choose website:</h>
+        <div class="website_button">
+            <a class="open_website_yt" href="https://youtube.com"><img src="img/youtube.png"><div class="website_name">YouTube</div></a>
+            <a class="open_website_soundcloud" href="https://soundcloud.com/search"><img src="img/soundcloud.png"><div class="website_name">SoundCloud</div></a>
+        </div>
+        <br><br><br>
+        <h>Or request a supported URL</h>
+        <input class="search_site" id="search_site" type="text" placeholder="Search any website or direct link file"><a class="search_button" href="javascript:requestUrl()">Go to page</a>
+    </div>
+  </body>
+</html>
