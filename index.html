@@ -19,7 +19,7 @@
         <br>
         <h>Search history:</h>
         <a class="search_button" href="javascript:reset_history()">Reset history</a>
-        <div class="website_button" id="history_">
+        <div class="website_history" id="history_">
             Loading..
         </div>
     </div>
@@ -33,23 +33,34 @@
             }
         }
 
-        function reset_history() {
-            for(let i=0; i < localStorage.length; i++) {
-                if(localStorage.key(i).startsWith("media_player_history_")) {
-                    localStorage.removeItem(localStorage.key(i));
+        function reset_history(remove_id) {
+            if(remove_id) {
+                for(let i=0; i < localStorage.length; i++) {
+                    if(localStorage.key(i).startsWith("media_player_history_") && remove_id === i) {
+                        localStorage.removeItem(localStorage.key(i));
+                    }
+                }
+            }
+            else{
+                for(let i=0; i < localStorage.length; i++) {
+                    if(localStorage.key(i).startsWith("media_player_history_")) {
+                        localStorage.removeItem(localStorage.key(i));
+                    }
                 }
             }
             load_history();
         }
 
-        let button = '<a class="open_website_classic" href="%url%"><img src="img/no_icon.jpg"><div class="website_name">%url_show%</div></a>';
+        let button = '<div class="history_website_button"><a class="open_website_classic" href="%url%"> <div>%url_show%</div> <div>%url%</div></a><a class="remove_history" href="javascript:reset_history(%id%)">Remove</a></div>';
         function load_history() {
             let history = document.getElementById("history_");
             let history_meta = "";
             for(let i=0; i < localStorage.length; i++) {
                 if(localStorage.key(i).startsWith("media_player_history_")) {
                     let cur_item = localStorage.getItem(localStorage.key(i));
-                    history_meta = history_meta + button.replace(/%url%/gm,cur_item).replace(/%url_show%/gm,cur_item.replace("https://","").replace("http://","").replace("www.",""));
+
+                    let only_ip = cur_item.split("/").slice(0,3).join("/").replace("https://","").replace("http://","").replace("www.","");
+                    history_meta = history_meta + button.replace(/%id%/,i).replace(/%url%/gm,cur_item.split("/").slice(0,3).join("/").replace("www.","")).replace(/%url_show%/gm,only_ip) + "<br>";
                 }
             }
             history.innerHTML = history_meta;
