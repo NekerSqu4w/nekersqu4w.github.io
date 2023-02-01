@@ -5,18 +5,6 @@
     <title>Media player - Choose Website</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="website.css">
-    <script defer>
-        function requestUrl() {
-            let search = document.getElementById("search_site");
-
-            if(search.value !== "" && (search.value.startsWith("http://") || search.value.startsWith("https://"))) {
-                //gmod.requestUrl(search.value);
-                window.location.href = search.value;
-
-                //window.open(search.value);
-            }
-        }
-    </script>
   </head>
   <body>
     <div class="container">
@@ -28,6 +16,45 @@
         <br><br><br>
         <h>Or request a supported URL</h>
         <input class="search_site" id="search_site" type="text" placeholder="Search any website or direct link file"><a class="search_button" href="javascript:requestUrl()">Go to page</a>
+        <br>
+        <h>Search history:</h>
+        <a class="search_button" href="javascript:reset_history()">Reset history</a>
+        <div class="website_button" id="history_">
+            Loading..
+        </div>
     </div>
+
+    <script>
+        function requestUrl(me) {
+            let search = document.getElementById("search_site");
+            if(search.value !== "" && (search.value.startsWith("http://") || search.value.startsWith("https://"))) {
+                localStorage.setItem("media_player_history_" + search.value,search.value);
+                window.location.href = search.value;
+            }
+        }
+
+        function reset_history() {
+            for(let i=0; i < localStorage.length; i++) {
+                if(localStorage.key(i).startsWith("media_player_history_")) {
+                    localStorage.removeItem(localStorage.key(i));
+                }
+            }
+            load_history();
+        }
+
+        let button = '<a class="open_website_classic" href="%url%"><img src="img/no_icon.jpg"><div class="website_name">%url%</div></a>';
+        function load_history() {
+            let history = document.getElementById("history_");
+            let history_meta = "";
+            for(let i=0; i < localStorage.length; i++) {
+                if(localStorage.key(i).startsWith("media_player_history_")) {
+                    let cur_item = localStorage.getItem(localStorage.key(i)).replace("https://","").replace("http://","").replace("www.","");
+                    history_meta = history_meta + button.replace(/%url%/gm,cur_item);
+                }
+            }
+            history.innerHTML = history_meta;
+        }
+        load_history();
+    </script>
   </body>
 </html>

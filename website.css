@@ -11,7 +11,7 @@ div.website_button {
     margin-top: 12px;
 }
 
-a.open_website_yt, a.open_website_spotify, a.open_website_soundcloud, a.open_website_twitch {
+a.open_website_yt, a.open_website_soundcloud, a.open_website_classic {
     text-decoration: none;
     color: white;
     width: 120px;
@@ -36,7 +36,7 @@ a.open_website_yt, a.open_website_spotify, a.open_website_soundcloud, a.open_web
     transition: border 0.4s;
 }
 
-a.open_website_yt img, a.open_website_soundcloud img {
+a.open_website_yt img, a.open_website_soundcloud img, a.open_website_classic img {
     width: calc(100% - 40px);
 }
 
@@ -51,6 +51,15 @@ a.open_website_yt:hover {
 
 a.open_website_soundcloud:hover {
     border: solid rgb(255, 150, 70);
+    border-width: 0px;
+    border-bottom-width: 2px;
+
+    box-shadow: 0px 0px 25px rgb(80, 70, 60);
+    transition: border 0.2s;
+}
+
+a.open_website_classic:hover {
+    border: solid rgb(70, 255, 70);
     border-width: 0px;
     border-bottom-width: 2px;
 
