@@ -42,14 +42,14 @@
             load_history();
         }
 
-        let button = '<a class="open_website_classic" href="%url%"><img src="img/no_icon.jpg"><div class="website_name">%url%</div></a>';
+        let button = '<a class="open_website_classic" href="%url%"><img src="img/no_icon.jpg"><div class="website_name">%url_show%</div></a>';
         function load_history() {
             let history = document.getElementById("history_");
             let history_meta = "";
             for(let i=0; i < localStorage.length; i++) {
                 if(localStorage.key(i).startsWith("media_player_history_")) {
-                    let cur_item = localStorage.getItem(localStorage.key(i)).replace("https://","").replace("http://","").replace("www.","");
-                    history_meta = history_meta + button.replace(/%url%/gm,cur_item);
+                    let cur_item = localStorage.getItem(localStorage.key(i));
+                    history_meta = history_meta + button.replace(/%url%/gm,cur_item).replace(/%url_show%/gm,cur_item.replace("https://","").replace("http://","").replace("www.",""));
                 }
             }
             history.innerHTML = history_meta;
